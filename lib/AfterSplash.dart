@@ -45,6 +45,18 @@ class AfterSplashScreen extends State<AfterSplash> {
     }
   }
 
+  void _reset(){
+    setState(() {
+      for (int i = 0;i<64;i++){
+        img[i] = null;
+      }
+      disableButton = true;
+      selected = 0;
+      sel = 0;
+      sw = 0;
+    });
+  }
+
   nextMove(List<int> m) {
     var doublem = m.map((i) => i.toDouble()).toList();
     Matrix m1 = Matrix.fill(8, 8);
@@ -80,12 +92,33 @@ class AfterSplashScreen extends State<AfterSplash> {
           prev = m.indexOf(i);
           i = i + 1;
           if (i == 65){
+            _showDialog();
             timer.cancel();
           }
         });
       });
   }
 
+
+  void _showDialog(){
+    showDialog(context: context,
+      builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Warnsdorff's Algorithm executed successfully"),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new FlatButton(
+            child: new Text("Reset"),
+            onPressed: () {
+              _reset();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +171,7 @@ class AfterSplashScreen extends State<AfterSplash> {
             RaisedButton(
 
 
-                child: Text((disableButton == false)?"START":"RESET",
+                child: Text((disableButton == false)?"START":"",
                     style: TextStyle(color: Colors.white, fontSize: 20.0)),
                 color: Colors.black,
                 padding: const EdgeInsets.all(30.0),
@@ -154,6 +187,6 @@ class AfterSplashScreen extends State<AfterSplash> {
           ],
         ),
       ),
-    );;
+    );
   }
 }
