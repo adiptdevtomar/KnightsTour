@@ -116,7 +116,8 @@ class AfterSplashScreen extends State<AfterSplash> {
           ),
         ],
       );
-      }
+      },
+      barrierDismissible: false
     );
   }
 
